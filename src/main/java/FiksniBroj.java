@@ -25,10 +25,9 @@ public class FiksniBroj extends TelefonskiBroj implements Comparable {
         return b.grad.equals(grad) && b.broj.equals(broj);
     }
 
-
     @Override
     public int compareTo(Object o) {
         FiksniBroj temp = (FiksniBroj) o;
-        return temp.ispisi().compareTo(this.ispisi());
+        return this.ispisi().compareTo(temp.ispisi());
     }
 }
