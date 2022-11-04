@@ -1,8 +1,8 @@
 import java.util.Objects;
 
 public class MedunarodniBroj extends TelefonskiBroj {
-    protected String drzava;
-    protected String broj;
+    private String drzava;
+    private String broj;
 
     public MedunarodniBroj(String d, String b) {
         this.drzava = d;
@@ -16,12 +16,12 @@ public class MedunarodniBroj extends TelefonskiBroj {
 
     @Override
     public int hashCode() {
-        return Objects.hash(drzava, broj);
+        return 0;
     }
 
     @Override
     public boolean equals(Object o) {
-        MedunarodniBroj b = (MedunarodniBroj)o;
+        MedunarodniBroj b = (MedunarodniBroj) o;
         return b.drzava.equals(drzava) && b.broj.equals(broj);
     }
 

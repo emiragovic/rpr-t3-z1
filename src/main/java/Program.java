@@ -1,46 +1,76 @@
-import java.util.TreeSet;
+import java.util.Scanner;
 
 public class Program {
     public static void main(String[] args) {
-        FiksniBroj b1 = new FiksniBroj(Grad.SARAJEVO, "123-123");
-        System.out.println("Fiksni broj : " + b1.ispisi());
-
-        MobilniBroj b2 = new MobilniBroj(60, "332-7095");
-        System.out.println("Mobilni broj : " + b2.ispisi());
-
-        MedunarodniBroj b3 = new MedunarodniBroj("+387", "60S3327095");
-        System.out.println("Međunarodni broj : " + b3.ispisi());
-
-
+        Scanner input = new Scanner(System.in);
         Imenik imenik = new Imenik();
-        imenik.dodaj("Emir Agović", new MobilniBroj(61, "332-7095"));
-        imenik.dodaj("Kerim Halilović", new MobilniBroj(61, "555-333"));
-        imenik.dodaj("Bakir Pljakić", new FiksniBroj(Grad.SARAJEVO, "555-334"));
-        imenik.dodaj("Selma Ljuhar", new FiksniBroj(Grad.ZENICA, "555-331"));
-        imenik.dodaj("Selma Ličina", new FiksniBroj(Grad.SARAJEVO, "555-332"));
-        imenik.dodaj("Ali Boudella", new FiksniBroj(Grad.SARAJEVO, "555-336"));
-        imenik.dodaj("Vedad Ramić", new FiksniBroj(Grad.DOBOJ, "555-333"));
-        imenik.dodaj("Ehlimana Ćesić", new FiksniBroj(Grad.MOSTAR, "555-333"));
-        imenik.dodaj("Omar Osmanović", new MobilniBroj(61, "555-333"));
 
-        char c = 'E';
-        System.out.println("Osobe u imeniku na slovo " + c);
-        System.out.println(imenik.naSlovo(c));
-        c = 'S';
-        System.out.println("Osobe u imeniku na slovo " + c);
-        System.out.println(imenik.naSlovo(c));
-        c = 'O';
-        System.out.println("Osobe u imeniku na slovo " + c);
-        System.out.println(imenik.naSlovo(c));
+        System.out.println("Dobrodošli u IMENIK!");
+        while (true) {
+            System.out.println("Prikaz svih kontakata - 1");
+            System.out.println("Unos novog kontakta - 2");
+            System.out.println("Prikaz svih kontakata koji počinju na određeno slovo - 5");
+            System.out.println("Broj koji pripada imenu - 6");
+            System.out.println("Izlaz - 0");
+            System.out.print("Izaberite opciju: ");
+            int choice = input.nextInt();
+            switch (choice) {
+                case 0:
+                    System.exit(0);
+                case 1:
+                    imenik.ispisi();
+                    break;
+                case 2:
+                    System.out.println("UNOS NOVOG KONTAKTA");
+                    System.out.println("Mobilni broj - 1");
+                    System.out.println("Fiksni broj - 2 // USKORO");
+                    System.out.println("Međunarodni broj - 3");
+                    System.out.print("Izaberite opciju: ");
+                    int choice2 = input.nextInt();
+                    switch (choice2) {
+                        case 1:
+                            System.out.println("Unesite ime i prezime kontakta: ");
+                            String ime = input.next() + " " + input.next();
+                            System.out.println("Unesite mobilnu mrežu: ");
+                            int mobilnaMreza = input.nextInt();
+                            System.out.println("Unesite broj: ");
+                            String broj = input.next();
+                            MobilniBroj temp = new MobilniBroj(mobilnaMreza, broj);
+                            imenik.dodaj(ime, temp);
+                            break;
+                        case 2:
+                            System.out.println("Unesite ime i prezime kontakta: ");
+                            ime = input.next() + " " + input.next();
 
-        System.out.println("Ljudi iz Sarajeva : ");
-        TreeSet<String> ljudovi = imenik.izGrada(Grad.SARAJEVO);
-        for (String ime : ljudovi)
-            System.out.println(ime);
+                            break;
+                        case 3:
+                            System.out.println("Unesite ime i prezime kontakta: ");
+                            ime = input.next() + " " + input.next();
+                            System.out.println("Unesite pozizivni prefiks države: ");
+                            String drzava = input.next();
+                            System.out.println("Unesite broj: ");
+                            broj = input.next();
+                            MedunarodniBroj temp2 = new MedunarodniBroj(drzava, broj);
+                            imenik.dodaj(ime, temp2);
+                            break;
+                    }
+                    break;
+                case 5:
+                    System.out.println("Unesite slovo: ");
+                    char c = input.next().charAt(0);
+                    System.out.println(imenik.naSlovo(c));
+                    break;
+                case 6:
+                    System.out.println("Unesite ime i prezime kontakta: ");
+                    String ime = input.next() + " " + input.next();
+                    System.out.println(imenik.dajBroj(ime));
+                    break;
+                default:
+                    System.out.println("POGRESAN UNOS!");
+                    break;
+            }
+            System.out.println("---------------------------------------");
+        }
 
-        System.out.println("Brojevi telefona iz Sarajeva : ");
-        TreeSet<TelefonskiBroj> telefoni = imenik.izGradaBrojevi(Grad.SARAJEVO);
-        for (TelefonskiBroj broj : telefoni)
-            System.out.println(broj.ispisi());
     }
 }

@@ -1,15 +1,11 @@
-
 import java.util.HashMap;
 import java.util.TreeSet;
-import java.util.Set;
-import java.util.Iterator;
-import java.util.Collections;
 
 public class Imenik {
-    protected HashMap<String, TelefonskiBroj> m;
+    private HashMap<String, TelefonskiBroj> m;
 
-    public Imenik(){
-        m = new HashMap<String, TelefonskiBroj>();
+    public Imenik() {
+        m = new HashMap<>();
     }
 
     public void dodaj(String ime, TelefonskiBroj broj) {
@@ -22,9 +18,7 @@ public class Imenik {
 
     public String dajIme(TelefonskiBroj broj) {
         String ime = "";
-        Iterator<HashMap.Entry<String, TelefonskiBroj>> it = m.entrySet().iterator();
-        while (it.hasNext()) {
-            HashMap.Entry<String, TelefonskiBroj> entry = it.next();
+        for (HashMap.Entry<String, TelefonskiBroj> entry : m.entrySet()) {
             if (entry.getValue().equals(broj)) {
                 ime = new String(entry.getKey());
                 break;
@@ -33,45 +27,53 @@ public class Imenik {
         return ime;
     }
 
-    public String naSlovo(char s){
+    public String naSlovo(char s) {
         String rez = "";
         int brojac = 0;
-        Iterator<HashMap.Entry<String, TelefonskiBroj>> it = m.entrySet().iterator();
-        while(it.hasNext()){
-            HashMap.Entry <String, TelefonskiBroj> entry = it.next();
-            if(entry.getKey().charAt(0) == s)
+
+        for (HashMap.Entry<String, TelefonskiBroj> entry : m.entrySet()) {
+            if (entry.getKey().charAt(0) == s)
                 rez += ++brojac + ". " + entry.getKey() + " - " + entry.getValue().ispisi() + "\n";
         }
         return rez;
     }
 
-    TreeSet<String> izGrada(Grad g){
+    TreeSet<String> izGrada(Grad g) {
         TreeSet<String> rez = new TreeSet<>();
-        Iterator<HashMap.Entry<String, TelefonskiBroj>> it = m.entrySet().iterator();
-        while(it.hasNext()){
-            HashMap.Entry <String, TelefonskiBroj> entry = it.next();
-            if(entry.getValue() instanceof FiksniBroj){
-                FiksniBroj temp = (FiksniBroj)entry.getValue();
-                if(temp.grad.equals(g))
+
+        for (HashMap.Entry<String, TelefonskiBroj> entry : m.entrySet()) {
+            if (entry.getValue() instanceof FiksniBroj) {
+                FiksniBroj temp = (FiksniBroj) entry.getValue();
+                if (temp.getGrad().equals(g))
                     rez.add(entry.getKey());
             }
         }
+
         return rez;
     }
 
-    TreeSet<TelefonskiBroj> izGradaBrojevi(Grad g){
-        TreeSet<TelefonskiBroj> rez = new TreeSet<TelefonskiBroj>();
-        Iterator<HashMap.Entry<String, TelefonskiBroj>> it = m.entrySet().iterator();
-        while(it.hasNext()){
-            HashMap.Entry <String, TelefonskiBroj> entry = it.next();
-            if(entry.getValue() instanceof FiksniBroj){
-                FiksniBroj temp = (FiksniBroj)entry.getValue();
-                if(temp.grad.equals(g))
+    TreeSet<TelefonskiBroj> izGradaBrojevi(Grad g) {
+        TreeSet<TelefonskiBroj> rez = new TreeSet<>();
+
+        for (HashMap.Entry<String, TelefonskiBroj> entry : m.entrySet()) {
+            if (entry.getValue() instanceof FiksniBroj) {
+                FiksniBroj temp = (FiksniBroj) entry.getValue();
+                if (temp.getGrad().equals(g))
                     rez.add(entry.getValue());
 
             }
         }
+
         return rez;
+    }
+
+    public void ispisi() {
+        if (m.isEmpty())
+            System.out.println("Imenik je prazan!");
+        int brojac = 0;
+        for (HashMap.Entry<String, TelefonskiBroj> entry : m.entrySet())
+            System.out.println(++brojac + ". " + entry.getKey() + " - " + entry.getValue().ispisi());
+
     }
 
 }
